@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WhereToMeet</title>
+        <link rel="stylesheet" type="text/css" href="project.css">
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <h1 id="logo">WhereToMeet</h1><br><br>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-5" >
+                    <span class="lead text-center">Select desired type of destination</span><br>
+                        <select>
+                            <option value="mall">Mall</option>
+                            <option value="landmark">Landmark</option>
+                            <option value="restaurant">Restaurant</option>
+                            <option value="placesOfInterest">Places of Interest</option>
+                        </select><br><br>
+                    <form>
+                        <div class="form-group">
+                            <label for="addr">Enter your Address</label>
+                            <input type="text" class="form-control" id="addr" name="addr" placeholder="I'm watching..">
+                            <button type="button" id="addButton" class="btn btn-success" onclick="getLoc()">Add</button>
+                            <input type="hidden" id="lat" name="lat" value="1.2973784" />
+                            <input type="hidden" id="lng" name="lng" value="103.8495219" />
+                            <br><br> 
+                        </div>
+                        
+                        
+                    </form> 
+                    <ul id="addresses"></ul>
+                </div>
+
+                <div class="col-7" style="text-align: center;">
+                    <div id="map"></div><br>
+                    <p id="display" class="lead text-center"></p>
+                    <p id="weather" class="lead text-center"></p>
+                </div>
+            </div> 
+        </div>
+    
+    <script>
+        function initMap() {
+            var lat = parseFloat(document.getElementById("lat").value);
+            var lng = parseFloat(document.getElementById("lng").value);
+            var loc = { lat: lat, lng: lng };
+
+            var map = new google.maps.Map(
+                document.getElementById('map'), {zoom: 12, center: loc});
+            var marker = new google.maps.Marker({position: loc, map: map});
+        }
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSTui6T6BhtciILh4TMXhearl-s4LkSb4&callback=initMap" async defer></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function getLoc() {
+            var addr = encodeURI(document.getElementById("addr").value);
+            var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=AIzaSyDSTui6T6BhtciILh4TMXhearl-s4LkSb4";
+
+            axios.get(url)
+                .then(response => {   
+                    var info = getFullAddress(response.data);
+                    document.getElementById("display").innerHTML = info;
+                    var coordinate = getLatLng(response.data);
+                    document.getElementById("lat").value = coordinate["lat"];
+                    document.getElementById("lng").value = coordinate["lng"];
+                    initMap();
+                })
+                .catch(error => {
+                    console.log(error);
+                    document.getElementById("display").innerHTML = "Sorry, invalid address. Please try again!";
+                });
+        }
+
+        function getFullAddress(data) {
+            var addr = data["results"][0]["formatted_address"];
+            var loc = getLatLng(data);
+            return addr + "<br> lat: " + loc["lat"] + ",lng: " + loc["lng"];
+        }
+
+        function getLatLng(data) {
+            var location = data["results"][0]["geometry"]["location"];
+            return location;
+        }
+    </script>
+
+    <script>
+        var addButton = document.getElementById("addButton");
+        addButton.addEventListener("click", addItem);
+
+        function addItem() {
+            var address = document.getElementById("addr").value;
+            var bullet = document.createElement("li");
+
+            bullet.innerHTML = address + "<button class='btn btn-secondary' onclick='deleteItem(this.parentNode)'>delete</button>";
+            var list = document.getElementById("addresses");
+            list.appendChild(bullet);
+        }
+
+        function deleteItem(obj) {
+            obj.remove()
+        }
+    </script>
+
+    <script>
+        var addButton = document.getElementById("addButton");
+        addButton.addEventListener("click", getWeather);
+
+        function getWeather() {
+                var addr = encodeURI(document.getElementById("addr").value);
+                console.log(addr)
+                var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + addr + "&APPID=8d6f21e5351582a8051551f99ef3fa88"
+                
+                //axios.get("http://api.openweathermap.org/data/2.5/weather?q=Singapore,sg&APPID=8d6f21e5351582a8051551f99ef3fa88")
+                axios.get(url)
+                .then(response =>  {
+                    console.log(response.data)
+                    const weather = response.data.weather[0].description
+                    document.getElementById("weather").innerText = weather;
+                })
+                .catch(error => {
+                    document.getElementById("weather").innerText = "No weather updates!";
+                });   
+            }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    </body>
+</html>
