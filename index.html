@@ -356,6 +356,7 @@
         </script>
     
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSTui6T6BhtciILh4TMXhearl-s4LkSb4&callback=initMap" async defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSTui6T6BhtciILh4TMXhearl-s4LkSb4&libraries=places&callback=initAutocomplete" async defer></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script>
             function getLoc() {
@@ -387,8 +388,18 @@
                 var location = data["results"][0]["geometry"]["location"];
                 return location;
             }
+            let autocomplete;
+            function initAutocomplete(){
+                autocomplete = new google.maps.places.Autocomplete(
+                    document.getElementById('addr'),
+                    {
+                        types: [],
+                        componentRestrictions: {'country':['SG']},
+                    }
+                );
+            }
+            
         </script>
-    
         <script>
             var addButton = document.getElementById("addButton");
             addButton.addEventListener("click", addItem);
