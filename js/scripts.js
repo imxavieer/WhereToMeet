@@ -63,7 +63,7 @@ var addButton = document.getElementById("addButton");
                 var address = document.getElementById("addr").value;
                 var bullet = document.createElement("li");
     
-                bullet.innerHTML = address + "<button class='btn btn-secondary' onclick='deleteItem(this.parentNode)'>delete</button>";
+                bullet.innerHTML = address + "&nbsp;&nbsp;<button class='btn btn-secondary' onclick='deleteItem(this.parentNode)'>delete</button>";
                 var list = document.getElementById("addresses");
                 list.appendChild(bullet);
             }
