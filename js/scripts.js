@@ -7,14 +7,25 @@
 // Use this file to add JavaScript to your project
 
 function initMap() {
-    var marker;
     var lat = parseFloat(document.getElementById("lat").value);
     var lng = parseFloat(document.getElementById("lng").value);
     var loc = { lat: lat, lng: lng };
 
     var map = new google.maps.Map(
         document.getElementById('map'), {zoom: 12, center: loc});
-    marker = new google.maps.Marker({position: loc, map: map});
+    var marker = new google.maps.Marker({position: loc, map: map});
+
+    let autocomplete;
+    function initAutocomplete(){
+        autocomplete = new google.maps.places.Autocomplete(
+        document.getElementById('addr'),
+        {
+            types: [],
+            componentRestrictions: {'country':['SG']},
+            }
+        );
+    }
+    initAutocomplete();
 }
 
 function getLoc() {
@@ -45,17 +56,6 @@ function getFullAddress(data) {
 function getLatLng(data) {
     var location = data["results"][0]["geometry"]["location"];
     return location;
-}
-
-let autocomplete;
-function initAutocomplete(){
-    autocomplete = new google.maps.places.Autocomplete(
-        document.getElementById('addr'),
-        {
-            types: [],
-            componentRestrictions: {'country':['SG']},
-        }
-    );
 }
 
 var addButton = document.getElementById("addButton");
