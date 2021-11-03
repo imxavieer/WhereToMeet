@@ -58,10 +58,21 @@ function getLoc() {
                 
                 console.log(lat1, lng1)
     
-                bullet.innerHTML = address + `&nbsp;&nbsp;
+                bullet.innerHTML = 
+                    `
+                    <div class='row'>
+                        <div class='col-10'>
+                    
+                            ${address}
+                    
+                        </div>
                         <input type="hidden" id="lat1" value=${lat1}>
                         <input type="hidden" id="lng1" value=${lng1}>
-                        <button class='btn btn-warning' onclick='deleteItem(this.parentNode)'>delete</button>`
+                        <div class='col-2'>
+                            <button class='btn btn-warning' onclick='deleteItem(this.parentNode)'>delete</button>
+                        </div>
+                    </div>
+                    `
                 ;
                 var list = document.getElementById("addresses");
                 list.appendChild(bullet);
