@@ -59,17 +59,17 @@ function getLatLng(data) {
 }
 
 var addButton = document.getElementById("addButton");
-            addButton.addEventListener("click", addItem);
+addButton.addEventListener("click", addItem);
     
-            function addItem() {
-                var address = document.getElementById("addr").value;
-                var bullet = document.createElement("li");
+function addItem() {
+    var address = document.getElementById("addr").value;
+    var bullet = document.createElement("li");
     
-                bullet.innerHTML = address + "&nbsp;&nbsp;<button class='btn btn-warning' onclick='deleteItem(this.parentNode)'>delete</button>";
-                var list = document.getElementById("addresses");
-                list.appendChild(bullet);
-            }
+    bullet.innerHTML = address + "&nbsp;&nbsp;<button class='btn btn-warning' onclick='deleteItem(this.parentNode)'>delete</button>";
+    var list = document.getElementById("addresses");
+    list.appendChild(bullet);
+}
     
-            function deleteItem(obj) {
-                obj.remove()
-            }
+function deleteItem(obj) {
+    obj.remove()
+}
