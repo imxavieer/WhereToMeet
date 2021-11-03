@@ -45,9 +45,9 @@ function getLatLng(data) {
     var location = data["results"][0]["geometry"]["location"];
     return location;
 }
-let autocomplete;
+
 function initAutocomplete(){
-    autocomplete = new google.maps.places.Autocomplete(
+    let autocomplete = new google.maps.places.Autocomplete(
         document.getElementById('addr'),
         {
             types: [],
