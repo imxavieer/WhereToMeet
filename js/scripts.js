@@ -11,19 +11,32 @@ function initMap() {
     var lng = parseFloat(document.getElementById("lng").value);
     var loc = { lat: lat, lng: lng };
 
+
+
     var map = new google.maps.Map(
         document.getElementById('map'), {zoom: 12, center: loc});
     var marker = new google.maps.Marker({position: loc, map: map});
 
+    var test = document.getElementsByClassName('form-group')
+   
+
+
+
     let autocomplete;
     function initAutocomplete(){
-        autocomplete = new google.maps.places.Autocomplete(
-        document.getElementById('addr'),
-        {
-            types: [],
-            componentRestrictions: {'country':['SG']},
-            }
-        );
+        for( var i = 0; i < test.length; i++){
+            var test2 = test[i].getElementsByTagName('input')
+            var test3 = test2[0]
+            
+            autocomplete = new google.maps.places.Autocomplete(
+                test3,
+                {
+                    types: [],
+                    componentRestrictions: {'country':['SG']},
+                    }
+                );
+        }
+        
     }
     initAutocomplete();
 }
@@ -59,17 +72,18 @@ function getLatLng(data) {
 }
 
 var addButton = document.getElementById("addButton");
-addButton.addEventListener("click", addItem);
+            addButton.addEventListener("click", addItem);
     
-function addItem() {
-    var address = document.getElementById("addr").value;
-    var bullet = document.createElement("li");
+            function addItem() {
+                var address = document.getElementById("addr").value;
+                var bullet = document.createElement("li");
     
-    bullet.innerHTML = address + "&nbsp;&nbsp;<button class='btn btn-warning' onclick='deleteItem(this.parentNode)'>delete</button>";
-    var list = document.getElementById("addresses");
-    list.appendChild(bullet);
-}
+                bullet.innerHTML = address + "&nbsp;&nbsp;<button class='btn btn-warning' onclick='deleteItem(this.parentNode)'>delete</button>";
+                var list = document.getElementById("addresses");
+                list.appendChild(bullet);
+            }
     
-function deleteItem(obj) {
-    obj.remove()
-}
+            function deleteItem(obj) {
+                obj.remove()
+            }
+
