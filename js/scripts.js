@@ -6,6 +6,8 @@
 // This file is intentionally blank
 // Use this file to add JavaScript to your project
 
+var num_of_inputs = 0
+
 function initMap() {
     var lat = parseFloat(document.getElementById("lat").value);
     var lng = parseFloat(document.getElementById("lng").value);
@@ -17,19 +19,17 @@ function initMap() {
         document.getElementById('map'), {zoom: 12, center: loc});
     var marker = new google.maps.Marker({position: loc, map: map});
 
-    var test = document.getElementsByClassName('form-group')
+
    
 
 
 
     let autocomplete;
     function initAutocomplete(){
-        for( var i = 0; i < test.length; i++){
-            var test2 = test[i].getElementsByTagName('input')
-            var test3 = test2[0]
+        
             
             autocomplete = new google.maps.places.Autocomplete(
-                test3,
+                document.getElementById('addr'),
                 {
                     types: [],
                     componentRestrictions: {'country':['SG']},
@@ -37,9 +37,12 @@ function initMap() {
                 );
         }
         
-    }
+    
     initAutocomplete();
 }
+
+var total_lat = 0
+var total_lng = 0
 
 function getLoc() {
     var addr = encodeURI(document.getElementById("addr").value);
@@ -50,8 +53,29 @@ function getLoc() {
             var info = getFullAddress(response.data);
             document.getElementById("display").innerHTML = info;
             var coordinate = getLatLng(response.data);
+            total_lat += coordinate.lat
+            total_lng += coordinate.lng
+            console.log(total_lat,total_lng)
+
             document.getElementById("lat").value = coordinate["lat"];
             document.getElementById("lng").value = coordinate["lng"];
+
+            var address = document.getElementById("addr").value;
+                var bullet = document.createElement("li");
+                var lat1 = document.getElementById('lat').value
+                var lng1 = document.getElementById('lng').value
+                
+                console.log(lat1, lng1)
+    
+                bullet.innerHTML = address + `&nbsp;&nbsp;
+                        <input type="hidden" id="lat1" value=${lat1}>
+                        <input type="hidden" id="lng1" value=${lng1}>
+                        <button class='btn btn-warning' onclick='deleteItem(this.parentNode)'>delete</button>`
+                ;
+                var list = document.getElementById("addresses");
+                list.appendChild(bullet);
+                num_of_inputs += 1;
+
             initMap();
         })
         .catch(error => {
@@ -72,18 +96,25 @@ function getLatLng(data) {
 }
 
 var addButton = document.getElementById("addButton");
-            addButton.addEventListener("click", addItem);
+// addButton.addEventListener("click", addItem);
     
-            function addItem() {
-                var address = document.getElementById("addr").value;
-                var bullet = document.createElement("li");
+// function addItem() {
+//     var address = document.getElementById("addr").value;
+//     var bullet = document.createElement("li");
     
-                bullet.innerHTML = address + "&nbsp;&nbsp;<button class='btn btn-warning' onclick='deleteItem(this.parentNode)'>delete</button>";
-                var list = document.getElementById("addresses");
-                list.appendChild(bullet);
-            }
+
+//     bullet.innerHTML = address + "&nbsp;&nbsp;<button class='btn btn-warning' onclick='deleteItem(this.parentNode)'>delete</button>";
+//     var list = document.getElementById("addresses");
+//     list.appendChild(bullet);
+// }
     
-            function deleteItem(obj) {
-                obj.remove()
-            }
+function deleteItem(obj) {
+//    console.log(obj.childNodes)
+    total_lat -= obj.childNodes[1].value
+    total_lng -= obj.childNodes[3].value
+    console.log(total_lat,total_lng)
+    obj.remove()
+    num_of_inputs -= 1
+    // console.log(num_of_inputs)
+}
 
