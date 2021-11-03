@@ -66,7 +66,7 @@ function getLoc() {
                 var list = document.getElementById("addresses");
                 list.appendChild(bullet);
                 num_of_inputs += 1;
-
+                document.getElementById("addr").value = ""
             initMap();
         })
         .catch(error => {
