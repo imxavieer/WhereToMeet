@@ -28,6 +28,15 @@ function initMap() {
     initAutocomplete();
 }
 
+<<<<<<< HEAD
+=======
+var total_lat = 0
+var total_lng = 0
+var avg_lat = 0
+var avg_lng = 0
+var recommended_address = ""
+
+>>>>>>> b06feb4505f3f18d2273eda2fe90091fcc04677b
 function getLoc() {
     var addr = encodeURI(document.getElementById("addr").value);
     var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=AIzaSyAIoAdg46VQtDiLA1mU-aEXQrGtrkFrcqk";
@@ -77,10 +86,11 @@ function deleteItem(obj) {
 }
 
 function reverseGeo() {
-    var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + total_lat + "," + total_lng + "&key=AIzaSyAIoAdg46VQtDiLA1mU-aEXQrGtrkFrcqk";
+    var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + avg_lat + "," + avg_lng + "&key=AIzaSyAIoAdg46VQtDiLA1mU-aEXQrGtrkFrcqk";
     axios.get(url)
         .then(response => {   
-            document.getElementById("display").innerHTML = response.data.results[5].formatted_address;
+            recommended_address = document.getElementById("display").innerHTML = response.data.results[0].formatted_address;
+            
         })
         .catch(error => {
             console.log(error);
@@ -89,10 +99,11 @@ function reverseGeo() {
 }
 
 function recommend() {
-    total_lat /= num_of_inputs;
-    total_lng /= num_of_inputs;
-    document.getElementById('lat').value = total_lat;
-    document.getElementById('lng').value = total_lng;
+    console.log(total_lat,total_lng,num_of_inputs)
+    avg_lat = total_lat / num_of_inputs;
+    avg_lng = total_lng / num_of_inputs;
+    document.getElementById('lat').value = avg_lat;
+    document.getElementById('lng').value = avg_lng;
     initMap();
     reverseGeo();
 }
