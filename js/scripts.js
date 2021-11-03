@@ -118,11 +118,24 @@ function deleteItem(obj) {
     // console.log(num_of_inputs)
 }
 
+function reverseGeo() {
+    var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + total_lat + "," + total_lng + "&key=AIzaSyAIoAdg46VQtDiLA1mU-aEXQrGtrkFrcqk";
+    axios.get(url)
+        .then(response => {   
+            document.getElementById("display").innerHTML = response.data.results[5].formatted_address;
+        })
+        .catch(error => {
+            console.log(error);
+            document.getElementById("display").innerHTML = "Sorry, invalid address. Please try again!";
+        });
+}
+
 function recommend() {
     total_lat /= num_of_inputs;
     total_lng /= num_of_inputs;
     document.getElementById('lat').value = total_lat;
     document.getElementById('lng').value = total_lng;
     initMap();
+    reverseGeo();
 }
 
