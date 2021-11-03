@@ -44,8 +44,29 @@ function getLoc() {
             var info = getFullAddress(response.data);
             document.getElementById("display").innerHTML = info;
             var coordinate = getLatLng(response.data);
+            total_lat += coordinate.lat
+            total_lng += coordinate.lng
+            console.log(total_lat,total_lng)
+
             document.getElementById("lat").value = coordinate["lat"];
             document.getElementById("lng").value = coordinate["lng"];
+
+            var address = document.getElementById("addr").value;
+                var bullet = document.createElement("li");
+                var lat1 = document.getElementById('lat').value
+                var lng1 = document.getElementById('lng').value
+                
+                console.log(lat1, lng1)
+    
+                bullet.innerHTML = address + `&nbsp;&nbsp;
+                        <input type="hidden" id="lat1" value=${lat1}>
+                        <input type="hidden" id="lng1" value=${lng1}>
+                        <button class='btn btn-warning' onclick='deleteItem(this.parentNode)'>delete</button>`
+                ;
+                var list = document.getElementById("addresses");
+                list.appendChild(bullet);
+                num_of_inputs += 1;
+
             initMap();
         })
         .catch(error => {
@@ -65,30 +86,34 @@ function getLatLng(data) {
     return location;
 }
 
-var addButton = document.getElementById("addButton");
-addButton.addEventListener("click", addItem);
+// var addButton = document.getElementById("addButton");
+// addButton.addEventListener("click", addItem);
     
-function addItem() {
-    var address = document.getElementById("addr").value;
-    var bullet = document.createElement("li");
+// function addItem() {
+//     var address = document.getElementById("addr").value;
+//     var bullet = document.createElement("li");
     
-    bullet.innerHTML = "<div class='row'><div class='col-8'>" + address + "</div>&nbsp;&nbsp; <div class='col-4'><button class='btn btn-warning ' onclick='deleteItem(this.parentNode)'>delete</button></div></div>";
-    var list = document.getElementById("addresses");
-    list.appendChild(bullet);
-}
+//     bullet.innerHTML = "<div class='row'><div class='col-8'>" + address + "</div>&nbsp;&nbsp; <div class='col-4'><button class='btn btn-warning ' onclick='deleteItem(this.parentNode)'>delete</button></div></div>";
+//     var list = document.getElementById("addresses");
+//     list.appendChild(bullet);
+// }
     
 function deleteItem(obj) {
-    obj.remove()
-    num_of_inputs -= 1
-    // console.log(num_of_inputs)
-}
+    //    console.log(obj.childNodes)
+        total_lat -= obj.childNodes[1].value
+        total_lng -= obj.childNodes[3].value
+        console.log(total_lat,total_lng)
+        obj.remove()
+        num_of_inputs -= 1
+        // console.log(num_of_inputs)
+    }
 
 function reverseGeo() {
     var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + avg_lat + "," + avg_lng + "&key=AIzaSyAIoAdg46VQtDiLA1mU-aEXQrGtrkFrcqk";
     axios.get(url)
         .then(response => {   
-            recommended_address = document.getElementById("display").innerHTML = response.data.results[0].formatted_address;
-            
+            recommended_address = document.getElementById("display").innerHTML = response.data.results[5].formatted_address;
+            console.log(response.data)
         })
         .catch(error => {
             console.log(error);
