@@ -30,28 +30,28 @@
             </div>
         </nav>
         <!-- Header-->
-        <header class="bg-dark py-5">
-            <div class="container px-5">
+        <header class="bg-dark py-2">
+            <div class="container">
                 <div class="row gx-5 justify-content-center">
-                    <div class="col-lg-6">
-                        <div class="text-center my-5">
-                            <h1 class="display-5 fw-bolder text-white mb-2">Decide where to meet like never before</h1>
-                            <p class="lead text-white-50 mb-4">Instantly get a recommended place to meet based on a few user inputs! Such inputs include your addresses, and the desired type of place to meet.</p>
-                            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-                                <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Get Started</a>
-                                <a class="btn btn-outline-light btn-lg px-4" href="#team">Learn More</a>
-                            </div>
-                        </div>
+                    <div class="text-center my-2 col-lg-12 col-md-12 col-sm-12">
+                        <span class="display-6 fw-bolder text-white mb-2 ">Decide where to meet like never before</span>
+                    </div>    
+                    <div class="text-center my-2 col-lg-12 col-md-12 col-sm-12">
+                        <span class="lead text-white-50 mb-4">Instantly get a recommended place to meet based on a few user inputs! Such inputs include your addresses, and the desired type of place to meet.</span>
+                    </div>    
+                    <div class="d-grid d-sm-flex justify-content-sm-center">
+                        <a class="btn btn-primary btn-lg px-4 me-sm-3 my-2" href="#features">Get Started</a>
+                        <a class="btn btn-secondary btn-lg px-4 my-2" href="#team">Learn More</a>
                     </div>
                 </div>
             </div>
         </header>
         <!-- Features section-->
         <section class="py-5 border-bottom" id="features">
-            <div class="container px-5 my-5">
+            <div class="container px-1 my-1">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-5" >
+                        <div class="col-lg-4 col-md-12" >
                             <span class="lead text-center">Type</span><br>
                                 <select class=" my-2">
                                     <option disabled selected>Select type of destination</option>
@@ -63,22 +63,23 @@
                             <form>
                                 <div class="form-group">
                                     <label for="addr" class="lead text-center">Address</label>
-                                    <input type="text" class="form-control my-2" id="addr" name="addr" placeholder="Enter your address">
-                                    <button type="button" id="addButton" class="btn btn-success" onclick="getLoc()">Add</button>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="addr" name="addr" placeholder="Enter your address">
+                                        <button type="button" id="addButton" class="btn btn-success" onclick="getLoc()">Add</button>
+                                    </div> 
                                     <input type="hidden" id="lat" name="lat" value="1.2973784" />
                                     <input type="hidden" id="lng" name="lng" value="103.8495219" />
                                     <br><br> 
                                 </div>
-
-                                
-                                
-                                
                             </form> 
-                            <ul id="addresses"></ul> 
-                            <span><button type="button" id="recommendLocationButton" class="btn btn-success" onclick="recommend()">Recommend Location</button></span>
+                            <button type="button" id="recommendLocationButton" class="btn btn-success my-4" onclick="recommend()">Recommend Location</button>
+                            <ul id="addresses"></ul>
+                        </div>
+                        <div class="col-lg-1">
+
                         </div>
         
-                        <div class="col-lg-7">
+                        <div class="col-lg-7 col-md-12 px-1">
                             <div id="map"></div><br>
                             <p id="display" class="lead text-center"></p>
                         </div>
