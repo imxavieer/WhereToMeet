@@ -7,13 +7,14 @@
 // Use this file to add JavaScript to your project
 
 function initMap() {
+    var marker;
     var lat = parseFloat(document.getElementById("lat").value);
     var lng = parseFloat(document.getElementById("lng").value);
     var loc = { lat: lat, lng: lng };
 
     var map = new google.maps.Map(
         document.getElementById('map'), {zoom: 12, center: loc});
-    var marker = new google.maps.Marker({position: loc, map: map});
+    marker = new google.maps.Marker({position: loc, map: map});
 }
 
 function getLoc() {
