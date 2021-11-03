@@ -5,6 +5,7 @@
 */
 // This file is intentionally blank
 // Use this file to add JavaScript to your project
+var num_of_inputs = 0
 
 function initMap() {
     var lat = parseFloat(document.getElementById("lat").value);
@@ -28,15 +29,12 @@ function initMap() {
     initAutocomplete();
 }
 
-<<<<<<< HEAD
-=======
 var total_lat = 0
 var total_lng = 0
 var avg_lat = 0
 var avg_lng = 0
 var recommended_address = ""
 
->>>>>>> b06feb4505f3f18d2273eda2fe90091fcc04677b
 function getLoc() {
     var addr = encodeURI(document.getElementById("addr").value);
     var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=AIzaSyAIoAdg46VQtDiLA1mU-aEXQrGtrkFrcqk";
@@ -109,6 +107,6 @@ function recommend() {
 }
 
 function placeSearch(){
-    
+
 }
 
