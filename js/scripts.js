@@ -62,14 +62,12 @@ function getLoc() {
                     `
                     <div class='row'>
                         <div class='col-10'>
-                    
                             ${address}
-                    
                         </div>
                         <input type="hidden" id="lat1" value=${lat1}>
                         <input type="hidden" id="lng1" value=${lng1}>
                         <div class='col-2'>
-                            <button class='btn btn-warning' onclick='deleteItem(this.parentNode)'>delete</button>
+                            <button class='btn btn-danger' onclick='deleteItem(this.parentNode)'>delete</button>
                         </div>
                     </div>
                     `
@@ -111,10 +109,12 @@ function getLatLng(data) {
     
 function deleteItem(obj) {
     //    console.log(obj.childNodes)
-        total_lat -= obj.childNodes[1].value
-        total_lng -= obj.childNodes[3].value
+        let tempObj = obj.parentNode
+        console.log(tempObj.childNodes)
+        total_lat -= tempObj.childNodes[3].value
+        total_lng -= tempObj.childNodes[5].value
         console.log(total_lat,total_lng)
-        obj.remove()
+        tempObj.parentNode.remove()
         num_of_inputs -= 1
         // console.log(num_of_inputs)
     }
@@ -143,6 +143,22 @@ function recommend() {
 }
 
 function placeSearch(){
+    // var query = "Museum%20of%20Contemporary%20Art%20Australia&inputtype=textquery&fields=formatted_address%2Cname%2Crating%2Copening_hours%2Cgeometry";
+    // var urlToUse = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + query + "&key=AIzaSyAIoAdg46VQtDiLA1mU-aEXQrGtrkFrcqk";
+    // var config = {
+    //     method: 'get',
+    //     url: urlToUse,
+    //     headers: {
+    //         'X-Requested-With': 'XMLHttpRequest',
+    //         "Access-Control-Allow-Origin": "*"
+    //     }
+    // }
 
+    // axios.get(config)
+    // .then(function (response) {
+    //     console.log(JSON.stringify(response.data));
+    // })
+    // .catch(function (error) {
+    //     console.log(error);
+    // });
 }
-
