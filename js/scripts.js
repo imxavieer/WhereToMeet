@@ -118,3 +118,11 @@ function deleteItem(obj) {
     // console.log(num_of_inputs)
 }
 
+function recommend() {
+    total_lat /= num_of_inputs;
+    total_lng /= num_of_inputs;
+    document.getElementById('lat').value = total_lat;
+    document.getElementById('lng').value = total_lng;
+    initMap();
+}
+
