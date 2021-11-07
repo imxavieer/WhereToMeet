@@ -37,7 +37,7 @@ var recommended_address = ""
 
 function getLoc() {
     var addr = encodeURI(document.getElementById("addr").value);
-    var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=AIzaSyAIoAdg46VQtDiLA1mU-aEXQrGtrkFrcqk";
+    var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=";
 
     axios.get(url)
         .then(response => {   
@@ -120,7 +120,7 @@ function deleteItem(obj) {
     }
 
 function reverseGeo() {
-    var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + avg_lat + "," + avg_lng + "&key=AIzaSyAIoAdg46VQtDiLA1mU-aEXQrGtrkFrcqk";
+    var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + avg_lat + "," + avg_lng + "&key=AIzaSyDbG_KPOQUKczUdjUrQB635LweoahsO6lo";
     axios.get(url)
         .then(response => {   
             recommended_address = document.getElementById("display").innerHTML = response.data.results[5].formatted_address;
