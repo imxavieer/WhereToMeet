@@ -37,7 +37,7 @@ var recommended_address = ""
 
 function getLoc() {
     var addr = encodeURI(document.getElementById("addr").value);
-    var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=";
+    var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=AIzaSyDbG_KPOQUKczUdjUrQB635LweoahsO6lo";
 
     axios.get(url)
         .then(response => {   
