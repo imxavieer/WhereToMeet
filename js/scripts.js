@@ -265,7 +265,7 @@ function callback(results, status) {
 function getDetails(result){
     var request = {
         placeId: result.place_id,
-        fields: ['name', 'rating', 'photo', 'formatted_address']
+        fields: ['name', 'rating', 'photo', 'formatted_address', 'url']
         };
         
     service = new google.maps.places.PlacesService(map);
@@ -276,7 +276,7 @@ function getDetails(result){
 function callback2(place, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         // createMarker(place);
-        console.log(place)
+        // console.log(place)
         createPhotoMarker(place)
     }
 }
@@ -292,6 +292,8 @@ function createPhotoMarker(place) {
     var img = photos[0].getUrl()
     var rating = place.rating
     var addr = place.formatted_address
+    var web = place.url
+    document.getElementById()
 }
 
 function randomize(val) {
