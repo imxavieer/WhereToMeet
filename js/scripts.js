@@ -263,6 +263,9 @@ function callback(results, status) {
         console.log(rad);
         recommend();
     }
+    else {
+        alert("No locations found within 2km radius!")
+    }
 
     }
 function getDetails(result){
