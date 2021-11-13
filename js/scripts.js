@@ -46,7 +46,7 @@ function getLoc() {
             var coordinate = getLatLng(response.data);
             total_lat += coordinate.lat
             total_lng += coordinate.lng
-            console.log(total_lat,total_lng)
+            // console.log(total_lat,total_lng)
 
             document.getElementById("lat").value = coordinate["lat"];
             document.getElementById("lng").value = coordinate["lng"];
@@ -56,7 +56,7 @@ function getLoc() {
                 var lat1 = document.getElementById('lat').value
                 var lng1 = document.getElementById('lng').value
                 
-                console.log(lat1, lng1)
+                // console.log(lat1, lng1)
     
                 bullet.innerHTML = 
                     `
@@ -124,7 +124,7 @@ function reverseGeo() {
     axios.get(url)
         .then(response => {   
             recommended_address = document.getElementById("display").innerHTML = response.data.results[5].formatted_address;
-            console.log(response.data)
+            // console.log(response.data)
         })
         .catch(error => {
             console.log(error);
@@ -132,14 +132,22 @@ function reverseGeo() {
         });
 }
 
-function recommend() {
-    console.log(total_lat,total_lng,num_of_inputs)
+var test_lat;
+var test_lng;
+
+async function recommend() {
+    // console.log(total_lat,total_lng,num_of_inputs)
     avg_lat = total_lat / num_of_inputs;
     avg_lng = total_lng / num_of_inputs;
     document.getElementById('lat').value = avg_lat;
     document.getElementById('lng').value = avg_lng;
+    test_lat = avg_lat;
+    test_lng = avg_lng;
     initMap();
     reverseGeo();
+
+    await initialize();
+
 }
 
 function placeSearch(){
@@ -162,3 +170,82 @@ function placeSearch(){
     //     console.log(error);
     // });
 }
+// function nearbySearch(){
+
+
+//     var config = {
+//     method: 'get',
+//     url: 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522%2C151.1957362&radius=1500&type=restaurant&key=AIzaSyDbG_KPOQUKczUdjUrQB635LweoahsO6lo',
+//     headers: { }
+//     };
+
+//     axios(config)
+//     .then(function (response) {
+//         console.log("YES");
+//     console.log(JSON.stringify(response.data));
+//     })
+//     .catch(function (error) {
+//         console.log("NO")
+//     console.log(error);
+//     });
+// }
+
+var map;
+var service;
+var infowindow;
+var rad;
+rad = 10;
+
+async function initialize() {
+    // console.log(test_lat,test_lng)
+    var placetype = document.getElementById("placetype").value;
+
+    
+
+  var pyrmont = new google.maps.LatLng(test_lat,test_lng);
+//   console.log(pyrmont);
+
+  map = new google.maps.Map(document.getElementById('map'), {
+      center: pyrmont,
+      zoom: 15
+    });
+
+  var request = {
+    location: pyrmont,
+    radius: rad,
+    type: [placetype]
+  };
+
+  service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, callback);
+
+}
+
+function callback(results, status) {
+    // console.log(results.length);
+    console.log(status);
+    console.log(rad)
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+        console.log(results.length);
+        for (var i = 0; i < results.length; i++) {
+            console.log(results[i]);
+            rad = 10;
+        }}
+    else if (rad<30){
+        rad += 20;
+        console.log(rad);
+        recommend();
+    }
+
+    else if (rad<500){
+        rad += 100;
+        console.log(rad);
+        recommend();
+    }
+    else if (rad<1000){
+        rad += 200;
+        console.log(rad);
+        recommend();
+    }
+    }
+
