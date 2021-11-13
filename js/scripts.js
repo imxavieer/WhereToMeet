@@ -263,6 +263,15 @@ function callback(results, status) {
         console.log(rad);
         recommend();
     }
+    else if(confirm("No recommendations within " + rad + "m. \n Would you like to expand search area by 500m?")){
+        if(rad<5000){
+            rad += 1000
+            console.log(rad)
+            recommend()
+        }else{
+            alert("No recommendations available!")
+        }
+    }
 
     }
 function getDetails(result){
@@ -289,9 +298,6 @@ function callback2(place, status) {
 }
 
 function createPhotoMarker(place) {
-    
-
-    
    
     console.log("YES")
     console.log(place.name)
