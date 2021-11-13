@@ -325,7 +325,17 @@ function createPhotoMarker(place) {
         document.getElementById("ratingCard").innerText = "No rating given!"
     }
     else{
-        document.getElementById("ratingCard").innerText = rating
+        var stars = "&nbsp"
+        for (let i = 0; i < 5; i++){
+            if (i+1 <= Math.floor(rating)){
+                stars = stars + `<span class="fa fa-star checked"></span>`
+            }else {
+                stars = stars + `<span class="fa fa-star"></span>`
+            }
+        }
+        document.getElementById("ratingCard").innerHTML = rating + stars
+        console.log(typeof rating)
+
     }
   
     document.getElementById("urlCard").href = web
