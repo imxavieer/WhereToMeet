@@ -5,6 +5,8 @@
 */
 // This file is intentionally blank
 // Use this file to add JavaScript to your project
+var api_key = "AIzaSyASvPcINqEHS2tXIK05Xii1PaVGvVXHTnQ"
+// AIzaSyDbG_KPOQUKczUdjUrQB635LweoahsO6lo
 var num_of_inputs = 0
 
 function initMap() {
@@ -37,7 +39,7 @@ var recommended_address = ""
 
 function getLoc() {
     var addr = encodeURI(document.getElementById("addr").value);
-    var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=AIzaSyDbG_KPOQUKczUdjUrQB635LweoahsO6lo";
+    var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=" + api_key
 
     axios.get(url)
         .then(response => {   
@@ -120,7 +122,7 @@ function deleteItem(obj) {
     }
 
 function reverseGeo() {
-    var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + avg_lat + "," + avg_lng + "&key=AIzaSyDbG_KPOQUKczUdjUrQB635LweoahsO6lo";
+    var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + avg_lat + "," + avg_lng + "&key=" + api_key;
     axios.get(url)
         .then(response => {   
             recommended_address = document.getElementById("display").innerHTML = response.data.results[5].formatted_address;
@@ -271,22 +273,23 @@ function getDetails(result){
         
     service = new google.maps.places.PlacesService(map);
     service.getDetails(request, callback2);
+    // console.log(request)
 }
 
 
 function callback2(place, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         // createMarker(place);
-        // console.log(place)
+        console.log(place)
         createPhotoMarker(place)
+    }
+    else{
+        console.log("ERROR")
     }
 }
 
 function createPhotoMarker(place) {
-    var photos = place.photos;
-    if (!photos) {
-      return;
-    }
+    
 
     
    
@@ -300,7 +303,14 @@ function createPhotoMarker(place) {
     var marker = new google.maps.Marker({position: loc, map: map});
 
     var place_name = place.name
+
+    var photos = place.photos;
+    if (!photos) {
+      var img = "https://tacm.com/wp-content/uploads/2018/01/no-image-available.jpeg";
+    }
+    else{
     var img = photos[0].getUrl()
+    }
     var rating = place.rating
     var addr = place.formatted_address
     var web = place.url
