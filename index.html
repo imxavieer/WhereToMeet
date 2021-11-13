@@ -14,6 +14,11 @@
         <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+        <script>
+            function showCheck(){
+                alert(document.getElementById("randomCheck").checked)
+            }
+        </script>
     </head>
     <body>
         <!-- Responsive navbar-->
@@ -73,11 +78,17 @@
                                 </div>
                             </form> 
                             <button type="button" id="recommendLocationButton" class="btn btn-success my-4" onclick="recommend()">Recommend Location</button>
+                            <div class="form-check form-check-inline px-5 py-2">
+                                <input class="form-check-input" type="checkbox" id="randomCheck" value="False" onclick="showCheck()">
+                                <label class="form-check-label" for="randomCheck">Randomize</label>
+                            </div>
                             <ul id="addresses"></ul>
+                            
                         </div>
-
+                        <div class="col-lg-1">
+                        </div>
         
-                        <div class="col-lg-8 col-md-12 pl-5">
+                        <div class="col-lg-7 col-md-12 ml-5">
                             <div id="map"></div><br>
                             <p id="display" class="lead text-center"></p>
                         </div>

@@ -247,5 +247,56 @@ function callback(results, status) {
         console.log(rad);
         recommend();
     }
-    }
+}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function randomize(val) {
+    //console.log(val)
+    let result = 0
+    let up = true
+    if (Math.random()>0.5){
+        up=false
+    }
+    if(up){
+        result = Math.ceil((numb + Number.EPSILON) * 100) / 100;
+    } else {
+        result = Math.floor((numb + Number.EPSILON) * 100) / 100;
+    }
+}
