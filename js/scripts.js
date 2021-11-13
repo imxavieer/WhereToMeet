@@ -289,7 +289,14 @@ function createPhotoMarker(place) {
     var rating = place.rating
     var addr = place.formatted_address
     var web = place.url
-    document.getElementById()
+    console.log( document.getElementById("card"))
+    document.getElementById("card").hidden = false
+    document.getElementById("imgCard").src = img
+    document.getElementById("nameCard").innerText = place_name
+    document.getElementById("addrCard").innerText = addr
+    document.getElementById("ratingCard").innerText = rating
+    document.getElementById("urlCard").href = web
+
 }
 
 function randomize(val) {
