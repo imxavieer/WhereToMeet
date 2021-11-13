@@ -226,12 +226,15 @@ function callback(results, status) {
     console.log(status);
     console.log(rad)
     if (status == google.maps.places.PlacesServiceStatus.OK) {
-        console.log(results.length);
+        // console.log(results.length);
         for (var i = 0; i < results.length; i++) {
-            console.log(results[i]);
+            // console.log(results[i]);
             rad = 10;
-            getDetails();
-        }}
+        }
+        console.log('HERE')
+        console.log(results[0])
+        getDetails(results[0]);
+    }
     else if (rad<30){
         rad += 20;
         console.log(rad);
@@ -248,10 +251,11 @@ function callback(results, status) {
         console.log(rad);
         recommend();
     }
+
     }
-function getDetails(){
+function getDetails(result){
     var request = {
-        placeId: 'ChIJ-0TBj5EZ2jERhQGdBOfmVHw',
+        placeId: result.place_id,
         fields: ['name', 'rating', 'photo', 'formatted_address']
         };
         
