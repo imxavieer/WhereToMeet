@@ -256,12 +256,17 @@ function callback(results, status) {
         console.log(rad);
         recommend();
     }
+    else if (rad<2000){
+        rad += 500;
+        console.log(rad);
+        recommend();
+    }
 
     }
 function getDetails(result){
     var request = {
         placeId: result.place_id,
-        fields: ['name', 'rating', 'photo', 'formatted_address', 'url']
+        fields: ['name', 'rating', 'photo', 'formatted_address', 'url', 'geometry']
         };
         
     service = new google.maps.places.PlacesService(map);
@@ -282,20 +287,39 @@ function createPhotoMarker(place) {
     if (!photos) {
       return;
     }
+
+    
+   
     console.log("YES")
     console.log(place.name)
+    var newLat = place.geometry.location.lat()
+    var newLng = place.geometry.location.lng()
+    var loc = { lat: newLat, lng: newLng };
+    var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 12, center: loc});
+    var marker = new google.maps.Marker({position: loc, map: map});
+
     var place_name = place.name
     var img = photos[0].getUrl()
     var rating = place.rating
     var addr = place.formatted_address
     var web = place.url
+    console.log(rating)
+    
     console.log( document.getElementById("card"))
     document.getElementById("card").hidden = false
     document.getElementById("imgCard").src = img
     document.getElementById("nameCard").innerText = place_name
     document.getElementById("addrCard").innerText = addr
-    document.getElementById("ratingCard").innerText = rating
+    if (typeof rating == "undefined" ){
+        document.getElementById("ratingCard").innerText = "No rating given!"
+    }
+    else{
+        document.getElementById("ratingCard").innerText = rating
+    }
+  
     document.getElementById("urlCard").href = web
+    document.getElementById("display").innerText = place_name
 
 }
 
