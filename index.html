@@ -56,9 +56,10 @@
                                 <select class=" my-2" id="placetype">
                                     <option disabled selected>Select type of destination</option>
                                     <option value="shopping_mall">Mall</option>
-                                    <option value="landmark">Landmark</option>
+                                    <option value="supermarket">Supermarket</option>
                                     <option value="restaurant">Restaurant</option>
                                     <option value="cafe">Cafes</option>
+                                    <option value="subway_station">MRT</option>
                                 </select><br><br>
                             <form>
                                 <div class="form-group">
@@ -88,14 +89,16 @@
                             <p id="display" class="lead text-center"></p>
                         </div>
 
-                        <div class="card" style="width: 100%;">
-                            <img src="" class="card-img-top" alt="...">
+                        <div class="card" style="width: 100%;" hidden id="card">
+                            <img src="" class="card-img-top" alt="..." id="imgCard">
                             <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                              <a href="https://google.com" class="btn btn-primary">Check it Out!</a>
+                              <h5 class="card-title" id="nameCard">Card title</h5>
+                              <p class="card-text" id="addrCard"></p>
+                              <p class="card-text" id="ratingCard"></p>
+                              <a href="https://google.com" class="btn btn-primary" id="urlCard" target="_blank">Check it Out!</a>
                             </div>
                         </div>
+                        
                     </div> 
                 </div>
             </div>

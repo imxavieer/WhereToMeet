@@ -5,6 +5,8 @@
 */
 // This file is intentionally blank
 // Use this file to add JavaScript to your project
+var api_key = "AIzaSyASvPcINqEHS2tXIK05Xii1PaVGvVXHTnQ"
+// AIzaSyDbG_KPOQUKczUdjUrQB635LweoahsO6lo
 var num_of_inputs = 0
 
 function initMap() {
@@ -37,7 +39,7 @@ var recommended_address = ""
 
 function getLoc() {
     var addr = encodeURI(document.getElementById("addr").value);
-    var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=AIzaSyDbG_KPOQUKczUdjUrQB635LweoahsO6lo";
+    var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=" + api_key
 
     axios.get(url)
         .then(response => {   
@@ -120,7 +122,7 @@ function deleteItem(obj) {
     }
 
 function reverseGeo() {
-    var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + avg_lat + "," + avg_lng + "&key=AIzaSyDbG_KPOQUKczUdjUrQB635LweoahsO6lo";
+    var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + avg_lat + "," + avg_lng + "&key=" + api_key;
     axios.get(url)
         .then(response => {   
             recommended_address = document.getElementById("display").innerHTML = response.data.results[5].formatted_address;
@@ -256,16 +258,22 @@ function callback(results, status) {
         console.log(rad);
         recommend();
     }
+    else if (rad<2000){
+        rad += 500;
+        console.log(rad);
+        recommend();
+    }
 
     }
 function getDetails(result){
     var request = {
         placeId: result.place_id,
-        fields: ['name', 'rating', 'photo', 'formatted_address']
+        fields: ['name', 'rating', 'photo', 'formatted_address', 'url', 'geometry']
         };
         
     service = new google.maps.places.PlacesService(map);
     service.getDetails(request, callback2);
+    // console.log(request)
 }
 
 
@@ -275,19 +283,54 @@ function callback2(place, status) {
         console.log(place)
         createPhotoMarker(place)
     }
+    else{
+        console.log("ERROR")
+    }
 }
 
 function createPhotoMarker(place) {
-    var photos = place.photos;
-    if (!photos) {
-      return;
-    }
+    
+
+    
+   
     console.log("YES")
     console.log(place.name)
+    var newLat = place.geometry.location.lat()
+    var newLng = place.geometry.location.lng()
+    var loc = { lat: newLat, lng: newLng };
+    var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 12, center: loc});
+    var marker = new google.maps.Marker({position: loc, map: map});
+
     var place_name = place.name
+
+    var photos = place.photos;
+    if (!photos) {
+      var img = "https://tacm.com/wp-content/uploads/2018/01/no-image-available.jpeg";
+    }
+    else{
     var img = photos[0].getUrl()
+    }
     var rating = place.rating
     var addr = place.formatted_address
+    var web = place.url
+    console.log(rating)
+    
+    console.log( document.getElementById("card"))
+    document.getElementById("card").hidden = false
+    document.getElementById("imgCard").src = img
+    document.getElementById("nameCard").innerText = place_name
+    document.getElementById("addrCard").innerText = addr
+    if (typeof rating == "undefined" ){
+        document.getElementById("ratingCard").innerText = "No rating given!"
+    }
+    else{
+        document.getElementById("ratingCard").innerText = rating
+    }
+  
+    document.getElementById("urlCard").href = web
+    document.getElementById("display").innerText = place_name
+
 }
 
 function randomize(val) {
