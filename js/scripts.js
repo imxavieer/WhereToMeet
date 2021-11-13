@@ -263,7 +263,7 @@ function callback(results, status) {
         console.log(rad);
         recommend();
     }
-    else if(confirm("No recommendations within " + rad + "m. \n Would you like to expand search area by 500m?")){
+    else if(confirm("No recommendations within " + rad + "m. \n Would you like to expand search area by 1km?")){
         if(rad<5000){
             rad += 1000
             console.log(rad)
