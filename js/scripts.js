@@ -137,8 +137,17 @@ var test_lng;
 
 async function recommend() {
     // console.log(total_lat,total_lng,num_of_inputs)
+    // console.log(document.getElementById("randomCheck").checked)
     avg_lat = total_lat / num_of_inputs;
     avg_lng = total_lng / num_of_inputs;
+    if(document.getElementById("randomCheck").checked){
+        console.log("RANDOMIZING: ")
+        console.log("LAT: ", avg_lat, " LONG: ", avg_lng)
+        avg_lat = randomize(avg_lat)
+        avg_lng = randomize(avg_lng)
+        console.log("NEW VALUES: ")
+        console.log("LAT: ", avg_lat, " LONG: ", avg_lng)
+    }
     document.getElementById('lat').value = avg_lat;
     document.getElementById('lng').value = avg_lng;
     test_lat = avg_lat;
@@ -283,4 +292,19 @@ function createPhotoMarker(place) {
     var img = photos[0].getUrl()
     var rating = place.rating
     var addr = place.formatted_address
+}
+
+function randomize(val) {
+    //console.log(val)
+    let result = 0
+    let up = true
+    if (Math.random()>0.5){
+        up=false
+    }
+    if(up){
+        result = Math.ceil((val + Number.EPSILON) * 100) / 100;
+    } else {
+        result = Math.floor((val + Number.EPSILON) * 100) / 100;
+    }
+    return result
 }
