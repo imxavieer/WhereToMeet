@@ -141,12 +141,8 @@ async function recommend() {
     avg_lat = total_lat / num_of_inputs;
     avg_lng = total_lng / num_of_inputs;
     if(document.getElementById("randomCheck").checked){
-        console.log("RANDOMIZING: ")
-        console.log("LAT: ", avg_lat, " LONG: ", avg_lng)
         avg_lat = randomize(avg_lat)
         avg_lng = randomize(avg_lng)
-        console.log("NEW VALUES: ")
-        console.log("LAT: ", avg_lat, " LONG: ", avg_lng)
     }
     document.getElementById('lat').value = avg_lat;
     document.getElementById('lng').value = avg_lng;
