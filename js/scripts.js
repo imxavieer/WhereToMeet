@@ -230,6 +230,7 @@ function callback(results, status) {
         for (var i = 0; i < results.length; i++) {
             console.log(results[i]);
             rad = 10;
+            getDetails();
         }}
     else if (rad<30){
         rad += 20;
@@ -248,44 +249,37 @@ function callback(results, status) {
         recommend();
     }
 }
+function getDetails(){
+    var request = {
+        placeId: 'ChIJ-0TBj5EZ2jERhQGdBOfmVHw',
+        fields: ['name', 'rating', 'photo', 'formatted_address']
+        };
+        
+    service = new google.maps.places.PlacesService(map);
+    service.getDetails(request, callback2);
+}
 
 
+function callback2(place, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+        // createMarker(place);
+        console.log(place)
+        createPhotoMarker(place)
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function createPhotoMarker(place) {
+    var photos = place.photos;
+    if (!photos) {
+      return;
+    }
+    console.log("YES")
+    console.log(place.name)
+    var place_name = place.name
+    var img = photos[0].getUrl()
+    var rating = place.rating
+    var addr = place.formatted_address
+}
 
 function randomize(val) {
     //console.log(val)
@@ -299,4 +293,5 @@ function randomize(val) {
     } else {
         result = Math.floor((numb + Number.EPSILON) * 100) / 100;
     }
+    return result
 }
